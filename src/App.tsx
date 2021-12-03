@@ -1,36 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import axios from "axios";
+import React from 'react';
 import UserList from "./components/UserList";
-import PhotosList from './components/Photos/PhotosList';
 import Card, { CardVariants } from "./components/Card";
-import { Photo } from "./types/todo";
+import TodosPage from "./components/TodosPage/TodosPage";
+import PhotosPage from "./components/Photos/PhotosPage";
+import PhotoItemPage from "./components/Photos/PhotoItemPage";
+import Events from "./components/Events";
+import { Route, NavLink, Routes } from "react-router-dom";
 
 
 const App = () => {
-  const [photos, setPhotos] = useState<Photo[]>([]);
-
-  const fetchPhotos = async () => {
-    try {
-      const response = await axios.get<Photo[]>("https://jsonplaceholder.typicode.com/photos");
-      setPhotos(response.data);
-    } catch (e) {
-      alert(e)
-    }
-  }
-
-  useEffect(() => {
-    fetchPhotos();
-  },[])
-
-
   return (
     <div>
-      <UserList />
-      <Card width="200px" height="200px" variant={CardVariants.outlined}>
-        <button>Button</button>
-      </Card>
-      <PhotosList photos={photos} />
-    </div>
+      <Routes>
+      <Route path="/" element={<Card/>}></Route>
+      <Route path="/events" element={<Events/>}></Route>
+      <Route path="/users" element={<UserList/>}></Route>
+      <Route path="/todos" element={<TodosPage/>}></Route>
+      <Route path="/photos"element={<PhotosPage/>} ></Route>
+      <Route path="/photos/:id" element={<PhotoItemPage/>} ></Route>
+
+      </Routes>
+      <div>
+        <NavLink to="/">Main</NavLink>
+        <NavLink to="/events">Events</NavLink>
+        <NavLink to='/users'>Users</NavLink>
+        <NavLink to='/todos'>Todos</NavLink>
+        <NavLink to='/photos'>Photos</NavLink>
+        <NavLink to='/photos/:id'>Photo</NavLink>
+      </div>
+    </div>   
   );
 };
 
