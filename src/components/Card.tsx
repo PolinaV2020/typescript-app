@@ -1,17 +1,17 @@
-import React, {FC} from 'react';
+import React, { FC, useState } from 'react';
 
 export enum CardVariants {
     outlined = "outlined",
     primary = "primary"
 }
-
 interface CardProps {
     width?: string;
     height?: string;
     variant?: CardVariants;
+    onClick?: (num: number) => void;
 }
 
-const Card: FC<CardProps>= ({ width, height, variant, children }) => {
+const Card: FC<CardProps>= ({ width, height, variant, children, onClick }) => {
     return (
         <div style={{ 
             width, height, 
